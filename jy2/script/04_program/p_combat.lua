@@ -281,38 +281,19 @@ end
 --private=true
 --ret=_o_kungfu
 t['战斗系统_获取可用武功'] = function(string_武功类型)
-	local o_base_游戏数据 = G.QueryName(0x10050001)
-	local _o_kungfu_可用武功 = {G.QueryName(0x10040001)}
-	local o_kungfu_武功 = nil
-	if string_武功类型 == "拳" then 
-		_o_kungfu_可用武功 = {G.QueryName(0x10040001), G.QueryName(0x10040003), G.QueryName(0x10040004), G.QueryName(0x10040005), G.QueryName(0x10040006), G.QueryName(0x10040007), G.QueryName(0x10040008)}
-	elseif string_武功类型 == "掌" then 
-		_o_kungfu_可用武功 = {G.QueryName(0x10040001), G.QueryName(0x10040009), G.QueryName(0x1004000a), G.QueryName(0x1004000b), G.QueryName(0x1004000c), G.QueryName(0x1004000d), G.QueryName(0x1004000e)}
-	elseif string_武功类型 == "指" then 
-		_o_kungfu_可用武功 = {G.QueryName(0x10040001), G.QueryName(0x1004000f), G.QueryName(0x10040010), G.QueryName(0x10040011), G.QueryName(0x10040012), G.QueryName(0x10040013), G.QueryName(0x10040014)}
-	elseif string_武功类型 == "剑" then 
-		_o_kungfu_可用武功 = {G.QueryName(0x10040002), G.QueryName(0x10040015), G.QueryName(0x10040016), G.QueryName(0x10040017), G.QueryName(0x10040018), G.QueryName(0x10040019), G.QueryName(0x1004001a)}
-	elseif string_武功类型 == "内" then 
-		_o_kungfu_可用武功 = {G.QueryName(0x10040001), G.QueryName(0x1004001b), G.QueryName(0x1004001c), G.QueryName(0x1004001d), G.QueryName(0x1004001e), G.QueryName(0x1004001f), G.QueryName(0x10040020)}
-	elseif string_武功类型 == "物品" then 
-		_o_kungfu_可用武功 = {G.QueryName(0x10040001), G.QueryName(0x10040021), G.QueryName(0x10040022), G.QueryName(0x10040023), G.QueryName(0x10040024), G.QueryName(0x10040025), G.QueryName(0x10040026)}
-	else 
-	end
-	for int_i = 2, 7, 1 do 
-		o_kungfu_武功 = _o_kungfu_可用武功[int_i]
-		if o_kungfu_武功 ~= nil then 
-			if o_kungfu_武功.需物品 ~= nil then
-				if o_kungfu_武功.需物品.数量 <= 0 then
-					_o_kungfu_可用武功[int_i] = nil
-				end
-			elseif o_kungfu_武功.等级 <= 0 then 
-				_o_kungfu_可用武功[int_i] = nil
-			else 
-			end
-		else 
-		end
-	end
-	return _o_kungfu_可用武功
+    local _o_kungfu_可用武功 = {}
+    local o_kungfu_基础武功 = G.call("注册表_获取基础武功", string_武功类型)
+    local _o_kungfu_分类武功 = G.call("注册表_获取武功列表", string_武功类型, true, true) or {}
+
+    if o_kungfu_基础武功 ~= nil then
+        _o_kungfu_可用武功[1] = o_kungfu_基础武功
+    end
+
+    for i = 1, #_o_kungfu_分类武功 do
+        _o_kungfu_可用武功[#_o_kungfu_可用武功 + 1] = _o_kungfu_分类武功[i]
+    end
+
+    return _o_kungfu_可用武功
 end
 --type=战斗系统
 --hide=false

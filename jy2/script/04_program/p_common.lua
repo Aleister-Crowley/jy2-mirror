@@ -167,15 +167,15 @@ t['通用_UI交互响应'] = function()
 		elseif string_UI名称 == "人物" then 
 			G.call("通用_显示人物界面")
 		elseif string_UI名称 == "武功" or string_UI名称 == "武功_拳" then 
-			G.call("通用_显示武功界面",{G.QueryName(0x10040003), G.QueryName(0x10040004), G.QueryName(0x10040005), G.QueryName(0x10040006), G.QueryName(0x10040007), G.QueryName(0x10040008)})
+			G.call("通用_显示武功界面", G.call("注册表_获取武功列表", "拳", true, false))
 		elseif string_UI名称 == "武功_掌" then 
-			G.call("通用_显示武功界面",{G.QueryName(0x10040009), G.QueryName(0x1004000a), G.QueryName(0x1004000b), G.QueryName(0x1004000c), G.QueryName(0x1004000d), G.QueryName(0x1004000e)})
+			G.call("通用_显示武功界面", G.call("注册表_获取武功列表", "掌", true, false))
 		elseif string_UI名称 == "武功_指" then 
-			G.call("通用_显示武功界面",{G.QueryName(0x1004000f), G.QueryName(0x10040010), G.QueryName(0x10040011), G.QueryName(0x10040012), G.QueryName(0x10040013), G.QueryName(0x10040014)})
+			G.call("通用_显示武功界面", G.call("注册表_获取武功列表", "指", true, false))
 		elseif string_UI名称 == "武功_剑" then 
-			G.call("通用_显示武功界面",{G.QueryName(0x10040015), G.QueryName(0x10040016), G.QueryName(0x10040017), G.QueryName(0x10040018), G.QueryName(0x10040019), G.QueryName(0x1004001a)})
+			G.call("通用_显示武功界面", G.call("注册表_获取武功列表", "剑", true, false))
 		elseif string_UI名称 == "武功_内" then 
-			G.call("通用_显示武功界面",{G.QueryName(0x1004001b), G.QueryName(0x1004001c), G.QueryName(0x1004001d), G.QueryName(0x1004001e), G.QueryName(0x1004001f), G.QueryName(0x10040020)})
+			G.call("通用_显示武功界面", G.call("注册表_获取武功列表", "内", true, false))
 		elseif string_UI名称 == "物品" or string_UI名称 == "物品_装备" then 
 			G.call("通用_显示物品界面",0)
 		elseif string_UI名称 == "物品_卸兵" then 
@@ -577,66 +577,15 @@ end
 --private=false
 --text=遗忘所有武功
 t['通用_遗忘所有武功'] = function()
-	G.QueryName(0x10040003).等级 = 0
-	G.QueryName(0x10040003).经验 = 0
-	G.QueryName(0x10040004).等级 = 0
-	G.QueryName(0x10040004).经验 = 0
-	G.QueryName(0x10040005).等级 = 0
-	G.QueryName(0x10040005).经验 = 0
-	G.QueryName(0x10040006).等级 = 0
-	G.QueryName(0x10040006).经验 = 0
-	G.QueryName(0x10040007).等级 = 0
-	G.QueryName(0x10040007).经验 = 0
-	G.QueryName(0x10040008).等级 = 0
-	G.QueryName(0x10040008).经验 = 0
-	G.QueryName(0x10040009).等级 = 0
-	G.QueryName(0x10040009).经验 = 0
-	G.QueryName(0x1004000a).等级 = 0
-	G.QueryName(0x1004000a).经验 = 0
-	G.QueryName(0x1004000b).等级 = 0
-	G.QueryName(0x1004000b).经验 = 0
-	G.QueryName(0x1004000c).等级 = 0
-	G.QueryName(0x1004000c).经验 = 0
-	G.QueryName(0x1004000d).等级 = 0
-	G.QueryName(0x1004000d).经验 = 0
-	G.QueryName(0x1004000e).等级 = 0
-	G.QueryName(0x1004000e).经验 = 0
-	G.QueryName(0x1004000f).等级 = 0
-	G.QueryName(0x1004000f).经验 = 0
-	G.QueryName(0x10040010).等级 = 0
-	G.QueryName(0x10040010).经验 = 0
-	G.QueryName(0x10040011).等级 = 0
-	G.QueryName(0x10040011).经验 = 0
-	G.QueryName(0x10040012).等级 = 0
-	G.QueryName(0x10040012).经验 = 0
-	G.QueryName(0x10040013).等级 = 0
-	G.QueryName(0x10040013).经验 = 0
-	G.QueryName(0x10040014).等级 = 0
-	G.QueryName(0x10040014).经验 = 0
-	G.QueryName(0x10040015).等级 = 0
-	G.QueryName(0x10040015).经验 = 0
-	G.QueryName(0x10040016).等级 = 0
-	G.QueryName(0x10040016).经验 = 0
-	G.QueryName(0x10040017).等级 = 0
-	G.QueryName(0x10040017).经验 = 0
-	G.QueryName(0x10040018).等级 = 0
-	G.QueryName(0x10040018).经验 = 0
-	G.QueryName(0x10040019).等级 = 0
-	G.QueryName(0x10040019).经验 = 0
-	G.QueryName(0x1004001a).等级 = 0
-	G.QueryName(0x1004001a).经验 = 0
-	G.QueryName(0x1004001b).等级 = 0
-	G.QueryName(0x1004001b).经验 = 0
-	G.QueryName(0x1004001c).等级 = 0
-	G.QueryName(0x1004001c).经验 = 0
-	G.QueryName(0x1004001d).等级 = 0
-	G.QueryName(0x1004001d).经验 = 0
-	G.QueryName(0x1004001e).等级 = 0
-	G.QueryName(0x1004001e).经验 = 0
-	G.QueryName(0x1004001f).等级 = 0
-	G.QueryName(0x1004001f).经验 = 0
-	G.QueryName(0x10040020).等级 = 0
-	G.QueryName(0x10040020).经验 = 0
+    local _o_kungfu_全部武功 = G.call("注册表_获取全部武功") or {}
+    for i = 1, #_o_kungfu_全部武功 do
+        local o_kungfu_武功 = _o_kungfu_全部武功[i]
+        local string_分类 = G.call("注册表_获取武功分类", o_kungfu_武功)
+        if o_kungfu_武功 ~= nil and string_分类 ~= "基础" and string_分类 ~= "物品" and o_kungfu_武功.需物品 == nil then
+            o_kungfu_武功.等级 = 0
+            o_kungfu_武功.经验 = 0
+        end
+    end
 end
 --type=通用指令
 --hide=false

@@ -504,6 +504,22 @@ local t = {
 				['name']='升级',
 				['type']='_o_kungfu_lvup',
 			},
+			[12]={
+				['name']='分类',
+				['type']='string',
+			},
+			[13]={
+				['name']='排序',
+				['type']='int',
+			},
+			[14]={
+				['name']='说明',
+				['type']='string',
+			},
+			[15]={
+				['name']='是否显示',
+				['type']='boolean',
+			},
 		},
 	},
 	{

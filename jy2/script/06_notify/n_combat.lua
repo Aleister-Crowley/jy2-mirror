@@ -166,6 +166,7 @@ function noti.战斗系统_操作面板_更新武功类型(string_武功类型)
     if not (c_combat and c_combat.操作面板) then return end
     local c_combat_cpanel = c_combat.操作面板.c_combat_cpanel;
     if not c_combat_cpanel then return end
+    c_combat_cpanel:切换武功类型(string_武功类型)
     --
     for i = 0, c_combat_cpanel.切换武功类型.childCount - 1 do
         local ui = c_combat_cpanel.切换武功类型.getChildAt(i);
@@ -185,59 +186,9 @@ function noti.战斗系统_操作面板_更新武功状态(o_base_游戏数据,_
     if not (c_combat and c_combat.操作面板) then return end
     local c_combat_cpanel = c_combat.操作面板.c_combat_cpanel;
     if not c_combat_cpanel then return end
-    --
-    local int_集气 = o_base_游戏数据.主角.集气;
-    local int_内力 = o_base_游戏数据.主角.内力;
-    local o_kungfu_武功 = _o_kungfu_可用武功[1]
-    if o_kungfu_武功 then
-        if int_集气 >= o_kungfu_武功.需集气 and int_内力 >= o_kungfu_武功.需内力 * o_kungfu_武功.等级 then
-            c_combat_cpanel.按钮_攻击.c_button:enable();
-            c_combat_cpanel.按钮_攻击.c_handle_click.允许点击事件 = true;
-        else
-            c_combat_cpanel.按钮_攻击.c_button:disable();
-            c_combat_cpanel.按钮_攻击.c_handle_click.允许点击事件 = false;
-        end
-    end
-    for int_i = 1, 6 do
-        local ui = c_combat_cpanel['武功' .. int_i]
-        o_kungfu_武功 = _o_kungfu_可用武功[int_i + 1]
-        if o_kungfu_武功 then
-            ui.img = o_kungfu_武功.图标;
-            if o_kungfu_武功.需物品 ~= nil then
-                ui.getChildAt(0).text = o_kungfu_武功.需物品.数量
-                ui.getChildAt(0).visible = true
-            else
-                ui.getChildAt(0).visible = false
-            end
-            ui.mouseEnabled = true;
-            if int_集气 < o_kungfu_武功.需集气 or int_内力 < o_kungfu_武功.需内力 * o_kungfu_武功.等级 then
-                ui.color = 0x808080;
-                ui.c_handle_click.允许点击事件 = false;
-            else
-                ui.color = 0xFFFFFF;
-                ui.c_handle_click.允许点击事件 = true;
-            end
-            ui.c_handle_click.事件参数二 = o_kungfu_武功.name;  ----
-        else
-            ui.getChildAt(0).visible = false
-            ui.img = 0x5601100d;
-            ui.color = 0xFFFFFF;
-            ui.mouseEnabled = false;
-            ui.c_handle_click.允许点击事件 = false;
-            ui.c_handle_click.事件参数二 = 0;   ----
-        end
-    end
-    if o_base_游戏数据.对手.允许逃跑 then
-        if int_集气 >= 2 then
-            c_combat_cpanel.按钮_逃跑.c_button:enable();
-            c_combat_cpanel.按钮_逃跑.c_handle_click.允许点击事件 = true;
-        else
-            c_combat_cpanel.按钮_逃跑.c_button:disable();
-            c_combat_cpanel.按钮_逃跑.c_handle_click.允许点击事件 = false;
-        end
-    end
-end
 
+    c_combat_cpanel:设置武功数据(o_base_游戏数据, _o_kungfu_可用武功 or {})
+end
 function noti.战斗系统_显示战斗结果(enum_战斗结果_战斗结果)
     local ui_obj = G.getUI('v_combat') or G.addUI('v_combat');
     local c_combat = ui_obj.c_combat;

@@ -4,6 +4,7 @@
 
 local G = require "gf"
 local t = G.com()
+local CURRENT_SAVE_VERSION = 2
 function t:init()
     for i, v in ipairs({'标题', '取消'}) do
         self[v] = self.obj.getChildByName(v);
@@ -71,6 +72,7 @@ function t:saveFile(id)
 	};
     local path = G.GetSavePath('R_J2_' .. id .. '.sav');
     local obj = {
+        saveVersion = CURRENT_SAVE_VERSION,
         name = o_role_主角.姓名,
         lv = o_role_主角.等级,
         force = o_role_主角.门派,
@@ -80,6 +82,17 @@ function t:saveFile(id)
 	local buf = eris.persist(perms, obj)
 	buf = G.zip(buf)
 	G.WriteFile(path, buf)
+end
+function t:升级存档(obj)
+    if not obj then return false end
+    local version = obj.saveVersion or 1
+    if version > CURRENT_SAVE_VERSION then
+        return false
+    end
+
+    -- 后续存档结构发生变化时，在这里按版本逐级迁移。
+    obj.saveVersion = CURRENT_SAVE_VERSION
+    return true
 end
 function t:loadFile(id)
     if not id then return end
@@ -92,7 +105,7 @@ function t:loadFile(id)
 		local zipbuf = G.LoadFile(path);
         local buf = G.unzip(zipbuf);
         local success, obj = pcall(eris.unpersist, perms, buf)
-        if success and obj.savedata then
+        if success and obj.savedata and self:升级存档(obj) then
             self:load_ofile(obj.savedata);
             return true;
         end
