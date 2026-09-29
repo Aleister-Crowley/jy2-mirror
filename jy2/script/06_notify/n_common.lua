@@ -88,29 +88,14 @@ function noti.通用_显示武功界面(_o_kungfu_武功)
     local ui_obj = G.getUI('v_mainpanel') or G.addUI('v_mainpanel');
     local c_mainpanel = ui_obj.c_mainpanel;
     local c_mainpanel_kungfu = c_mainpanel.武功界面.c_mainpanel_kungfu;
-    for i = 1, 6 do
-        local ui = c_mainpanel_kungfu.列表.getChildAt(i - 1);
-        local o_kungfu_武功 = _o_kungfu_武功[i];
-        if o_kungfu_武功 and o_kungfu_武功.等级 > 0 then
-            ui.getChildAt(0).img = o_kungfu_武功.图标;
-            ui.getChildAt(1).text = o_kungfu_武功.名称;
-            ui.getChildAt(2).text = o_kungfu_武功.等级 .. '';
-            ui.getChildAt(1).visible = true;
-            ui.getChildAt(2).visible = true;
-        else
-            ui.getChildAt(0).img = 0x5601100d;
-            ui.getChildAt(1).visible = false;
-            ui.getChildAt(2).visible = false;
-        end
-    end
-    c_mainpanel.透明遮挡.visible = true;
-	c_mainpanel.人物界面.visible = false;
-	-- c_mainpanel.武功界面.visible = false;
-	c_mainpanel.物品界面.visible = false;
-	c_mainpanel.秘籍界面.visible = false;
-    c_mainpanel.武功界面.visible = true;
-end
 
+    c_mainpanel.透明遮挡.visible = true;
+    c_mainpanel.人物界面.visible = false;
+    c_mainpanel.物品界面.visible = false;
+    c_mainpanel.秘籍界面.visible = false;
+
+    c_mainpanel_kungfu:setData(_o_kungfu_武功 or {})
+end
 function noti.通用_显示物品界面(enum_物品类型_类型)
     if enum_物品类型_类型 == 3 then
         noti.通用_显示秘籍();
